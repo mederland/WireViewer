@@ -27,15 +27,24 @@ class CharacterListViewController: UIViewController, UISearchResultsUpdating, UI
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search Characters"
         searchController.searchBar.showsCancelButton = false
+        searchController.hidesNavigationBarDuringPresentation = false
         return searchController
     }()
-
-    private lazy var headerStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, searchController.searchBar])
-        stackView.axis = .vertical
-        stackView.spacing = 8
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
+    
+        private lazy var titleStackView: UIStackView = {
+            let stackView = UIStackView(arrangedSubviews: [titleLabel])
+            stackView.axis = .vertical
+            stackView.spacing = 8
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            return stackView
+        }()
+       
+        private lazy var searchBarStackView: UIStackView = {
+            let stackView = UIStackView(arrangedSubviews: [searchController.searchBar])
+            stackView.axis = .vertical
+            stackView.spacing = 8
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            return stackView
     }()
 
     private lazy var tableView: UITableView = {
@@ -51,24 +60,34 @@ class CharacterListViewController: UIViewController, UISearchResultsUpdating, UI
         super.viewDidLoad()
         setupUI()
         fetchCharacterData()
-        
+        self.extendedLayoutIncludesOpaqueBars = ((self.navigationController?.navigationBar.isTranslucent) != nil)
     }
 
-    private func setupUI() {
-        view.backgroundColor = .black
-        view.addSubview(headerStackView)
-        view.addSubview(tableView)
 
-        NSLayoutConstraint.activate([
-            headerStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-    }
+        private func setupUI() {
+            view.backgroundColor = .black
+
+            view.addSubview(titleStackView)
+            view.addSubview(searchBarStackView)
+            view.addSubview(tableView)
+
+            NSLayoutConstraint.activate([
+                titleStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                titleStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                titleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                
+                searchController.searchBar.heightAnchor.constraint(equalToConstant: 80),
+                
+                searchBarStackView.topAnchor.constraint(equalTo: titleStackView.bottomAnchor),
+                searchBarStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                searchBarStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+                tableView.topAnchor.constraint(equalTo: searchBarStackView.bottomAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+        }
     
     private func fetchCharacterData() {
         viewModel.fetchCharacters { [weak self] error in
