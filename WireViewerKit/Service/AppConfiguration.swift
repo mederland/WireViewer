@@ -5,4 +5,7 @@
 //  Created by Meder iZimov on 6/11/23.
 //
 
-import Foundation
+struct AppConfiguration {
+    static let apiURL = "https://api.duckduckgo.com/?q=the+wire+characters&format=json"
+    static let appName = "The Wire Viewer"
+}
