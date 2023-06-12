@@ -16,7 +16,7 @@ class CharacterListViewModel {
             filteredCharacterList = getFilteredCharacters(with: searchText)
         }
     }
-
+    
     func fetchCharacters(completion: @escaping (APIError?) -> Void) {
         APIHelper.shared.fetchCharacters() { [weak self] (character, error) in
             if let error = error {
@@ -39,7 +39,7 @@ class CharacterListViewModel {
         let characterList = isFiltered ? filteredCharacterList : characters
         return characterList[index]
     }
-
+    
     
     func getFilteredCharacters(with searchText: String) -> [RelatedTopic] {
         if searchText.isEmpty {
@@ -55,7 +55,7 @@ class CharacterListViewModel {
     func getCharacterFromFiltered(at index: Int) -> RelatedTopic {
         return filteredCharacterList[index]
     }
-
+    
 }
 
 extension String {
