@@ -11,67 +11,65 @@ class CharacterListViewController: UIViewController, UISearchResultsUpdating, UI
     private let viewModel = CharacterListViewModel()
     private var filteredCharacters: [RelatedTopic] = []
 
-    private let tableView = UITableView()
-    private var searchController = UISearchController(searchResultsController: nil)
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "The Wire Viewer"
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
+    }()
+
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search Characters"
+        searchController.searchBar.showsCancelButton = false
+        return searchController
+    }()
+
+    private lazy var headerStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, searchController.searchBar])
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        return tableView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         fetchCharacterData()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
     }
 
     private func setupUI() {
         view.backgroundColor = .black
-        
-        // Create a title label
-            let titleLabel = UILabel()
-            titleLabel.text = "Character Search"
-            titleLabel.textAlignment = .center
-            titleLabel.textColor = .white
-            titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
-
-
-        // Create a search bar and embed it in a search controller
-        _ = UISearchBar()
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.delegate = self // Add the delegate
-        searchController.searchBar.placeholder = "Search Characters"
-        searchController.searchBar.showsCancelButton = false
-        
-        // Create a container view for the title label and search bar
-            let headerView = UIView()
-            headerView.addSubview(titleLabel)
-            headerView.addSubview(searchController.searchBar)
-        tableView.tableHeaderView = headerView
-
-        // Set the search bar as the header view of the table view
-        tableView.tableHeaderView = searchController.searchBar
-
-        // Add the table view to the view
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(headerStackView)
         view.addSubview(tableView)
 
-        // Set the constraints for the table view
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-
-        // Set the data source and delegate of the table view
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-
-        // Set the title of the view controller
-        title = "The Wire Viewer"
     }
-
-
+    
     private func fetchCharacterData() {
         viewModel.fetchCharacters { [weak self] error in
             if let error = error {
@@ -145,3 +143,6 @@ extension CharacterListViewController: UITableViewDelegate {
     }
     
 }
+
+
+
