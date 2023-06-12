@@ -10,11 +10,11 @@ import Foundation
 class CharacterListViewModel {
   
     var characters: [RelatedTopic] = [RelatedTopic]()
-    private var filteredCharacterList: [RelatedTopic] = [RelatedTopic]()
+    var filteredCharacterList: [RelatedTopic] = [RelatedTopic]()
     
     var searchText: String = "" {
         didSet {
-            self.getFilteredCharacters()
+            self.getFilteredCharacters(with: searchText)
         }
     }
     
@@ -33,7 +33,7 @@ class CharacterListViewModel {
     }
 
     func getCharacterListCount() -> Int {
-        self.getFilteredCharacters()
+        self.getFilteredCharacters(with: searchText)
         return self.filteredCharacterList.count
     }
     
@@ -49,7 +49,7 @@ class CharacterListViewModel {
         return self.getCharacter(at: index).characterFullDescription.getCharacterDescription()
     }
     
-    func getFilteredCharacters() {
+    func getFilteredCharacters(with searchText: String) {
         if self.searchText.isEmpty {
             self.filteredCharacterList = self.characters
         } else {

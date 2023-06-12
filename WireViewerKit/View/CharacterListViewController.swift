@@ -8,13 +8,29 @@
 import UIKit
 
 class CharacterListViewController: UIViewController, UISearchResultsUpdating {
+    private let viewModel = CharacterListViewModel()
+    
     func updateSearchResults(for searchController: UISearchController) {
-        print("Hello")
+        guard let searchText = searchController.searchBar.text else {
+            return
+        }
+        
+        // Update the search text in the view model
+        viewModel.searchText = searchText
+        
+        // Reload the table view to display the filtered results
+        tableView.reloadData()
     }
+
+
+
+
+
+
     
     private let tableView = UITableView()
     private let searchController = UISearchController(searchResultsController: nil)
-    private let viewModel = CharacterListViewModel()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
