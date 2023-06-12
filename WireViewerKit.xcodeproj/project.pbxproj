@@ -17,6 +17,7 @@
 		1CA2DDFF2A3689CD005EA947 /* CharacterListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA2DDFE2A3689CD005EA947 /* CharacterListViewModel.swift */; };
 		1CA2DE012A368A12005EA947 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA2DE002A368A12005EA947 /* APIError.swift */; };
 		1CA2DE032A368C0E005EA947 /* CharacterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA2DE022A368C0E005EA947 /* CharacterListViewController.swift */; };
+		1CDDDC072A37AB3700A08813 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1CDDDC062A37AB3700A08813 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		1CA2DDFE2A3689CD005EA947 /* CharacterListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewModel.swift; sourceTree = "<group>"; };
 		1CA2DE002A368A12005EA947 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		1CA2DE022A368C0E005EA947 /* CharacterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewController.swift; sourceTree = "<group>"; };
+		1CDDDC062A37AB3700A08813 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../../../../Desktop/README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,13 +66,14 @@
 		1CA2DDDE2A3683E4005EA947 /* WireViewerKit */ = {
 			isa = PBXGroup;
 			children = (
+				1CDDDC062A37AB3700A08813 /* README.md */,
+				1CA2DDED2A3683E6005EA947 /* Info.plist */,
+				1CA2DDE82A3683E6005EA947 /* Assets.xcassets */,
 				1CA2DDF72A3685AE005EA947 /* Delegates */,
 				1CA2DDF62A3684C7005EA947 /* Service */,
 				1CA2DDF32A368438005EA947 /* Model */,
 				1CA2DDF42A36847B005EA947 /* View */,
 				1CA2DDF52A36848C005EA947 /* ViewModel */,
-				1CA2DDED2A3683E6005EA947 /* Info.plist */,
-				1CA2DDE82A3683E6005EA947 /* Assets.xcassets */,
 			);
 			path = WireViewerKit;
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CDDDC072A37AB3700A08813 /* README.md in Resources */,
 				1CA2DDE92A3683E6005EA947 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
